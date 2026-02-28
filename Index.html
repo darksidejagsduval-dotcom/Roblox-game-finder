@@ -1,40 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roblox Game Finder</title>
+
 <style>
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 15px;
-  background: linear-gradient(135deg, #ff4d4d, #4dff88, #4da6ff, #ffcc33);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    margin: 0;
+    padding: 20px;
 }
-@keyframes gradientBG {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
+
 h1 {
-  text-align: center;
-  font-size: 36px;
-  margin-bottom: 20px;
-  text-shadow: 1px 1px 3px #000;
+    font-size: 28px;
 }
-#bob-chat {
-  background-color: rgba(0,0,0,0.9);
-  padding: 15px;
-  margin-bottom: 10px;
-  max-width: 100%;
-  height: 250px;
-  overflow-y: auto;
-  border-radius: 0;
+
+button {
+    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
 }
-.message {
+
+button:hover {
+    background-color: #ddd;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Roblox Game Finder</h1>
+
+<button onclick="showGame('Horror', 'Doors')">Horror</button>
+<button onclick="showGame('Fighting', 'Strongest Battlegrounds')">Fighting</button>
+<button onclick="showGame('Anime', 'Anime Adventures')">Anime</button>
+<button onclick="showGame('Obby', 'Tower of Hell')">Obby</button>
+<button onclick="showGame('Simulator', 'Pet Simulator X')">Simulator</button>
+<button onclick="showGame('Roleplay', 'Brookhaven RP')">Roleplay</button>
+<button onclick="showGame('PvP', 'Arsenal')">PvP</button>
+
+<div id="result"></div>
+
+<script>
+function showGame(type, game) {
+    document.getElementById("result").innerHTML =
+    "Recommended " + type + " Game: " + game;
+}
+</script>
+
+</body>
+</html>.message {
   margin: 8px 0;
   padding: 10px;
   max-width: 80%;
