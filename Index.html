@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Game Finder</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #ff4d4d, #4dff88, #4da6ff, #ffcc33);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+}
+@keyframes gradientBG {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px #000;
+}
+#bob-chat {
+  background-color: rgba(0,0,0,0.9);
+  padding: 15px;
+  margin-bottom: 10px;
+  max-width: 100%;
+  height: 250px;
+  overflow-y: auto;
+  border-radius: 0;
+}
+.message {
+  margin: 8px 0;
+  padding: 10px;
+  max-width: 80%;
+  clear: both;
+}
+.user-msg {
+  background-color: #fff;
+  color: #000;
+  float: right;
+  text-align: right;
+}
+.bob-msg {
+  background-color: #333;
+  color: #fff;
+  float: left;
+  text-align: left;
+}
+#user-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 0;
+  border: none;
+  margin-bottom: 20px;
+}
+
+/* Buttons in row */
+.buttons-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.style-button {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+  transition: transform 0.2s;
+}
+.style-button:hover {
+  transform: translateY(-3px);
+}
+
+/* Game list display */
+#game-list-container {
+  margin-top: 20px;
+}
+.style-games {
+  margin-bottom: 20px;
+}
+.style-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: underline;
+}
+.game-card {
+  background-color: #111;
+  padding: 12px;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+</style>
+</head>
+<body>
+<h1>Roblox Game Finder</h1>
+
+<div id="bob-chat"></div>
+<input type="text" id="user-input" placeholder="Talk to Bob..." onkeydown="if(event.key==='Enter'){talkToBob();}">
+
+<div class="buttons-container" id="style-buttons">
+  <button class="style-button" onclick="showGames('horror')">Horror</button>
+  <button class="style-button" onclick="showGames('fighting')">Fighting</button>
+  <button class="style-button" onclick="showGames('anime')">Anime</button>
+  <button class="style-button" onclick="showGames('obby')">Obby</button>
+  <button class="style-button" onclick="showGames('funny')">Funny</button>
+  <button class="style-button" onclick="showGames('roleplay')">Roleplay</button>
+  <button class="style-button" onclick="showGames('simulator')">Simulator</button>
+  <button class="style-button" onclick="showGames('pvp')">PvP</button>
+  <button class="style-button" onclick="showGames('tycoon')">Tycoon</button>
+  <button class="style-button" onclick="showGames('adventure')">Adventure</button>
+  <button class="style-button" onclick="showGames('racing')">Racing</button>
+  <button class="style-button" onclick="showGames('mystery')">Mystery</button>
+  <button class="style-button" onclick="showGames('building')">Building</button>
+  <button class="style-button" onclick="showGames('sports')">Sports</button>
+  <button class="style-button" onclick="showGames('obstacle')">Obstacle</button>
+</div>
+
+<div id="game-list-container"></div>
+
+<script>
+const chatContainer = document.getElementById("bob-chat");
+const userInput = document.getElementById("user-input");
+
+const games = {
+  horror: ["Doors","Piggy","The Mimic","Dead Silence"],
+  fighting: ["Shindo Life","Project Slayers","Anime Fighting Simulator","Blox Fruits"],
+  anime: ["All Star Tower Defense","Anime Adventures","Anime Battle Arena"],
+  obby: ["Escape Obby","Tower of Hell","Speed Run 4","Mega Obby"],
+  funny: ["Adopt Me!","MeepCity","Work at a Pizza Place"],
+  roleplay: ["Brookhaven","Bloxburg","Royale High"],
+  simulator: ["Bee Swarm Simulator","Bubble Gum Simulator","Pet Simulator X"],
+  pvp: ["Arsenal","Phantom Forces","Mad City"],
+  tycoon: ["Restaurant Tycoon 2","Retail Tycoon","Theme Park Tycoon 2"],
+  adventure: ["Adventure Story","Treasure Hunt","Epic Quest"],
+  racing: ["Vehicle Simulator","Ultimate Driving","Car Crushers 2"],
+  mystery: ["Mystery Mansion","Detective Simulator","Hidden Objects"],
+  building: ["Build A Boat For Treasure","Tower Defense Simulator","Home Builder"],
+  sports: ["Super Striker League","Basketball Simulator","Football Universe"],
+  obstacle: ["Mega Fun Obby","Ultimate Obstacle Course","Parkour Simulator"]
+};
+
+function showGames(style){
+  const container = document.getElementById("game-list-container");
+
+  // Check if style is already displayed
+  let existing = document.getElementById(`games-${style}`);
+  if(existing){
+    existing.scrollIntoView({behavior:"smooth"});
+    return;
+  }
+
+  const styleDiv = document.createElement("div");
+  styleDiv.className = "style-games";
+  styleDiv.id = `games-${style}`;
+
+  const title = document.createElement("div");
+  title.className = "style-title";
+  title.textContent = style.toUpperCase() + " Games";
+  styleDiv.appendChild(title);
+
+  games[style].forEach(g=>{
+    const card = document.createElement("div");
+    card.className = "game-card";
+    card.textContent = g;
+    styleDiv.appendChild(card);
+  });
+
+  container.appendChild(styleDiv);
+  styleDiv.scrollIntoView({behavior:"smooth"});
+}
+
+function talkToBob(){
+  const input = userInput.value.trim();
+  if(!input) return;
+  const userMsg = document.createElement("div");
+  userMsg.className = "message user-msg";
+  userMsg.textContent = input;
+  chatContainer.appendChild(userMsg);
+
+  let reply = "I can suggest Roblox games by style. Try typing a style like 'horror' or 'fighting'.";
+  const inputLower = input.toLowerCase();
+  for(let style in games){
+    if(inputLower.includes(style)){
+      reply = `Here are some ${style} games: ${games[style].join(", ")}`;
+      break;
+    }
+  }
+
+  const bobMsg = document.createElement("div");
+  bobMsg.className = "message bob-msg";
+  bobMsg.textContent = reply;
+  chatContainer.appendChild(bobMsg);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+  userInput.value = "";
+}
+</script>
+</body>
+</html>
